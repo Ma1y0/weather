@@ -12,7 +12,7 @@ export async function fetchWeather(latitude: number, longitude: number) {
     latitude,
     longitude,
     current: ["temperature_2m", "apparent_temperature", "rain"],
-    hourly: "temperature_2m",
+    hourly: ["temperature_2m", "rain"],
     forecast_days: 1,
   };
   const url = "https://api.open-meteo.com/v1/forecast";
@@ -44,6 +44,7 @@ export async function fetchWeather(latitude: number, longitude: number) {
         hourly.interval(),
       ).map((t) => new Date((t + utcOffsetSeconds) * 1000)),
       temperature2m: hourly.variables(0)!.valuesArray()!,
+      rain: hourly.variables(1)!.valuesArray()!,
     },
   };
 
